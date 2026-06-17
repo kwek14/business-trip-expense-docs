@@ -2,6 +2,7 @@
 *.pdf
 *.pptx
 *.png
+!assets/*.png
 *.jpg
 *.jpeg
 *.heic

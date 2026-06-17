@@ -1,4 +1,4 @@
-![출장비 정산 서류를 만들다 지친 사람의 만화 일러스트](assets/reimbursement-frustration.svg)
+![출장비 정산 서류를 만들다 지친 사람의 만화 일러스트](assets/reimbursement-frustration.png)
 
 # 출장비 정산 서류 스킬
 
