@@ -1,46 +1,50 @@
-# business-trip-expense-docs
+# 출장비 정산 서류 스킬
 
-`business-trip-expense-docs` is a Codex skill for preparing reimbursement-ready evidence packages for business trip expenses.
+`business-trip-expense-docs`는 출장 중 발생한 비용을 정산받기 위한 증빙자료를 정리하는 Codex 스킬입니다.
 
-It is designed for Korean research-project, university, industry-academic cooperation, and corporate reimbursement workflows where trip expenses must be documented with receipts, booking confirmations, card approvals, and supporting evidence.
+국외출장, 국내출장, 학회 참석, 연구과제 출장비 정산처럼 영수증·예약확인서·카드 승인내역·이용대금명세서·호텔 folio 등을 모아 제출해야 하는 상황에 맞춰져 있습니다.
 
-## What It Does
+특히 숙박비, 항공료, 학회등록비처럼 금액이 크고 증빙이 복잡한 항목을 정리할 때 유용합니다.
 
-This skill guides Codex through preparing structured reimbursement materials for costs such as:
+## 어떤 걸 할 수 있나
 
-- lodging expenses
-- airfare
-- conference registration fees
-- local transportation
-- tourist tax, city tax, and other local taxes
-- personal-card payments to be reimbursed
-- booking-platform receipts from services such as Agoda or Booking.com
-- hotel folios, card approval screenshots, and email receipts
+| 상황 | 처리 방식 |
+| --- | --- |
+| 호텔 예약확인서와 카드 결제내역이 따로 있음 | 예약내역, 결제내역, 숙박기간을 맞춰 정산용 표로 정리 |
+| Agoda, Booking.com 등 플랫폼 결제와 현장 결제가 섞임 | 플랫폼 결제분과 호텔 현장 결제분을 분리 |
+| 개인카드로 먼저 결제하고 연구비로 정산받아야 함 | 카드 승인내역 또는 이용대금명세서를 증빙자료로 연결 |
+| 보증금, 가승인, deposit이 있음 | 실제 정산 요청 금액에서 제외하고 환불대기 항목으로 표시 |
+| 관광세, 도시세, 현지세가 별도 결제됨 | 숙박비와 섞지 않고 별도 세금 항목으로 분리 |
+| 결제 취소나 일부 환불이 예상됨 | 원 결제와 환불대기 금액을 따로 표시 |
+| 정산 담당자에게 제출할 자료가 필요함 | PPT 또는 PDF 형태의 제출용 증빙자료로 구성 |
 
-It is especially careful about separating actual reimbursable expenses from:
+## 결과물
 
-- deposits
-- preauthorizations
-- pending refunds
-- partially cancelled charges
-- unresolved local tax deductions
-- missing or conflicting evidence
+이 스킬은 설명용 답변이 아니라, 정산 담당자가 검토할 수 있는 제출용 자료를 만드는 데 초점을 둡니다.
 
-## Intended Output
+주로 다음 형태의 결과물을 만듭니다.
 
-The skill helps Codex create reviewer-facing reimbursement materials, usually as:
+- 출장비 정산 증빙자료 PPT
+- 출장비 정산 증빙자료 PDF
+- 비용 항목별 정산 요약표
+- 카드 결제내역과 영수증 매칭표
+- 보증금·환불대기·추가 확인 필요 항목 정리표
+- 원본 증빙자료 첨부 페이지
 
-- editable PowerPoint evidence decks
-- PDF evidence packages
-- source ledgers
-- expense summary tables
-- evidence mapping tables
+## 핵심 원칙
 
-The generated materials should be written for reimbursement reviewers, not as casual explanations to the user.
+이 스킬은 정산자료를 만들 때 다음 원칙을 우선합니다.
 
-## Install
+- 실제 지출로 확정된 금액만 `정산 요청 금액`에 포함합니다.
+- 보증금, 가승인, deposit, 환불대기 금액은 별도 항목으로 분리합니다.
+- 관광세, 도시세, 현지세는 숙박비에 임의로 합치지 않습니다.
+- 예약확인서, 영수증, 카드 승인내역, 이용대금명세서 사이의 금액이 맞는지 확인합니다.
+- 증빙이 부족한 항목은 숨기지 않고 `추가 확인 필요`로 표시합니다.
+- 영수증이나 카드내역을 새로 만들어내지 않습니다. 실제 증빙자료만 사용합니다.
 
-Clone this repository into your Codex skills directory:
+## 설치
+
+Codex 스킬 폴더에 이 저장소를 clone합니다.
 
 ```bash
 mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
@@ -49,17 +53,17 @@ git clone https://github.com/kwek14/business-trip-expense-docs.git \
   "${CODEX_HOME:-$HOME/.codex}/skills/business-trip-expense-docs"
 ```
 
-Restart Codex or start a new session so the skill can be discovered.
+설치 후 Codex를 새 세션으로 시작하면 스킬이 인식됩니다.
 
-## Usage
+## 사용 예시
 
-Invoke the skill explicitly:
+명시적으로 스킬을 호출하려면 다음처럼 요청합니다.
 
 ```text
 Use $business-trip-expense-docs to prepare a reimbursement-ready evidence package for my business trip expenses.
 ```
 
-Example requests:
+한국어로는 다음처럼 요청하면 됩니다.
 
 ```text
 출장 숙박비 정산 증빙자료를 PPT로 만들어줘.
@@ -73,7 +77,11 @@ Example requests:
 Agoda 예약확인서, 호텔 영수증, 카드 승인내역을 기준으로 정산자료를 만들어줘. 보증금은 환불대기로 분리해줘.
 ```
 
-## Repository Structure
+```text
+학회 참석 출장비 정산자료를 만들어줘. 항공료, 숙박비, 현지세를 구분해서 정리해줘.
+```
+
+## 저장소 구조
 
 ```text
 business-trip-expense-docs/
@@ -85,23 +93,32 @@ business-trip-expense-docs/
     └── evidence-rules.md
 ```
 
-## Privacy Note
+주요 파일은 다음 역할을 합니다.
 
-This repository should contain only skill instructions and reusable rules.
+| 파일 | 역할 |
+| --- | --- |
+| `SKILL.md` | 스킬이 언제 호출되고 어떻게 동작해야 하는지 정의 |
+| `agents/openai.yaml` | Codex UI에서 보이는 스킬 이름과 기본 설명 |
+| `references/evidence-rules.md` | 보증금, 환불, 현지세, 카드 승인내역 등 증빙 판단 규칙 |
+| `references/document-structure.md` | PPT/PDF 정산자료 구성 방식 |
 
-Do not commit actual reimbursement evidence such as:
+## 개인정보 주의
 
-- receipts
-- invoices
-- card statements
-- approval screenshots
-- passports
-- tickets
-- hotel folios
-- generated reimbursement PPT/PDF files
+이 저장소에는 스킬 설명과 재사용 가능한 규칙만 보관해야 합니다.
 
-Those files may contain personal information, payment details, travel schedules, booking numbers, or institutional data.
+다음 파일은 커밋하지 않는 것이 좋습니다.
 
-## License
+- 영수증
+- 카드 승인내역
+- 이용대금명세서
+- 호텔 folio
+- 항공권
+- 여권 또는 신분증
+- 예약확인서 원본
+- 생성된 정산자료 PPT/PDF
 
-Add a license if you plan to share or reuse this skill publicly.
+이런 파일에는 이름, 결제금액, 승인번호, 카드 정보, 예약번호, 출장 일정, 이메일 주소 등이 포함될 수 있습니다.
+
+## 라이선스
+
+공개 배포하거나 다른 사람이 재사용하도록 할 계획이라면 별도 라이선스를 추가하는 것이 좋습니다.
