@@ -1,0 +1,11 @@
+.DS_Store
+*.pdf
+*.pptx
+*.png
+*.jpg
+*.jpeg
+*.heic
+source_evidence/
+tmp/
+work/
+output/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "출장비 정산 서류"
+  short_description: "출장비 정산 증빙자료를 PPT/PDF로 구성합니다"
+  default_prompt: "Use $business-trip-expense-docs to prepare a reimbursement-ready evidence package for my business trip expenses."
